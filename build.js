@@ -28,7 +28,7 @@ function isDriveLink(str) {
 async function auth() {
   await doc.useServiceAccountAuth({
     client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY,
+    private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/gm, '\n'),
   });
 }
 
@@ -38,7 +38,7 @@ async function loadInfo() {
 
 async function processSheet(sheet) {
   const rows = await sheet.getRows();
-  // console.log(sheet.headerValues);
+  console.log(`Processing sheet: ${sheet.title}`);
   rows.forEach((row) => {
     const id = row._rawData[0];
     row._rawData.forEach((cell) => {
