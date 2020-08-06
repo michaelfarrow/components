@@ -40,6 +40,7 @@ async function loadInfo() {
 
 async function processSheet(sheet) {
   const rows = await sheet.getRows();
+  console.log('');
   console.log(`Processing sheet: ${sheet.title}`);
   rows.forEach((row) => {
     const id = row._rawData[0];
@@ -56,6 +57,7 @@ async function processSheet(sheet) {
           process.exit(1);
         }
         links[slug] = cell;
+        console.log(`${slug} - ${cell}`);
       }
     });
   });
