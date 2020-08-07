@@ -1,0 +1,116 @@
+body {
+  padding: 1em;
+}
+
+a {
+  color: red;
+}
+
+ul.breadcrumbs {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.breadcrumbs li {
+  display: inline-block;
+}
+
+ul.breadcrumbs li::before {
+  content: '>';
+  display: inline-block;
+  padding: 0em 0.3em 0em 0.1em;
+  color: #bbb;
+}
+
+ul.breadcrumbs li:first-child::before {
+  display: none;
+}
+
+.component__quantity {
+  background-color: cadetblue;
+  color: white;
+  padding: 0.05em 0.3em;
+  border-radius: 0.25em;
+}
+
+dl.component__fields dd,
+dl.component__fields dt {
+  box-sizing: border-box;
+}
+
+dl.component__fields dd {
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.5em;
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+dl.component__fields dt {
+  float: left;
+  font-weight: bold;
+}
+
+dl.component__fields dt::after {
+  content: ':';
+  margin-right: 0.2em;
+}
+
+@media only screen and (min-width: 500px) {
+  dl.component__fields {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  dl.component__fields dt {
+    float: none;
+    flex-basis: 30%;
+    max-width: 15em;
+    font-weight: bold;
+    padding-bottom: 0.5em;
+    padding-right: 0.5em;
+    margin-bottom: 0.5em;
+    border-bottom: 2px solid #ccc;
+  }
+
+  dl.component__fields dd {
+    flex-basis: 70%;
+    flex-grow: 1;
+  }
+}
+
+.button {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: red;
+}
+
+.button__datasheet {
+  margin-bottom: 1em;
+}
+
+.component__datasheet-preview-wrapper {
+  max-width: 40em;
+  border: 2px solid #ccc;
+  background-color: #fff;
+}
+
+.component__datasheet-preview {
+  position: relative;
+  padding-top: 141.4285714286%;
+}
+
+.component__datasheet-preview iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}

@@ -1,0 +1,10 @@
+<h1>Category: {{category.title}}</h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a></li>
+  <li>{{category.title}}</li>
+</ul>
+<ul class="components">
+  {{#each category.components}}
+  <li><a href="/c/{{../category.slug}}/{{slug}}/">{{id}}</a></li>
+  {{/each}}
+</ul>

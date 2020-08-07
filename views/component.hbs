@@ -1,0 +1,26 @@
+<h1>Component: {{component.id}} <span class="component__quantity">{{ component.quantity }}</span></h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a></li>
+  <li><a href="/c/{{category.slug}}/">{{category.title}}</a></li>
+  <li>{{component.id}}</li>
+</ul>
+<section>
+  {{#if component.fields.length}}
+  <dl class="component__fields">
+    {{#each component.fields}}
+    <dt>{{label}}</dt>
+    <dd>{{value}}</dd>
+    {{/each}}
+  </dl>
+  {{/if}}
+  {{#if component.datasheet}}
+  <section>
+    <a class="button button__datasheet" target="_blank" href="{{component.datasheet}}">Datasheet</a>
+    <div class="component__datasheet-preview-wrapper">
+      <div class="component__datasheet-preview">
+        <iframe src="{{component.datasheetPreview}}"></iframe>
+      </div>
+    </div>
+  </section>
+  {{/if}}
+</section>
