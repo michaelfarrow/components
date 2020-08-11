@@ -18,7 +18,9 @@
     <a class="button button__datasheet" target="_blank" href="{{component.datasheet}}">Datasheet</a>
     <div class="component__datasheet-preview-wrapper">
       <div class="component__datasheet-preview">
-        <iframe src="{{component.datasheetPreview}}"></iframe>
+        <div class="iframe__wrapper iframe--loading">
+          <iframe src="{{component.datasheetPreview}}" onload="iframeLoaded(this)"></iframe>
+        </div>
       </div>
     </div>
   </section>

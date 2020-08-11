@@ -31,9 +31,10 @@ async function processSheet(sheet) {
   const rows = await sheet.getRows();
   // await sheet.loadCells();
   const headers = sheet.headerValues;
+  const filledHeaders = [];
   console.log('');
   console.log(`Processing sheet: ${sheet.title}`);
-  const components = [];
+  const groups = [{ name: undefined, components: [] }];
   rows.forEach((row) => {
     // console.log(row.rowNumber);
     const id = row._rawData[0];
@@ -44,47 +45,71 @@ async function processSheet(sheet) {
     let quantity = 0;
     let datasheet = undefined;
     let datasheetPreview = undefined;
-    if (filledCells.length) {
+    if (filledCells.length === 1) {
+      if (!groups[groups.length - 1].components.length) {
+        groups[groups.length - 1].name = id;
+      } else {
+        groups.push({ name: id, components: [] });
+      }
+    } else if (filledCells.length > 1) {
       const fields = [];
       for (let i = 1; i < headers.length; i++) {
         const header = headers[i];
         if (header && String(header).trim().length) {
           const fieldVal = row._rawData[i];
-          if (fieldVal && String(fieldVal).trim().length) {
-            const headerNormalised = String(header).trim();
-            switch (headerNormalised.toLowerCase()) {
-              case 'datasheet':
+          // if (fieldVal && String(fieldVal).trim().length) {
+          const headerTitle = String(header).trim();
+          switch (headerTitle.toLowerCase()) {
+            case 'datasheet':
+              if (fieldVal) {
                 datasheet = String(fieldVal).trim();
                 datasheetPreview = `https://drive.google.com/file/d/${
                   datasheet.match(
                     /^https:\/\/drive\.google\.com\/file\/d\/([^\/]+)/
                   )[1]
                 }/preview`;
-                break;
-              case 'quantity':
-                quantity = Number(fieldVal);
-                break;
-              default:
-                const headerUnit = headerNormalised.match(
-                  /(.+)\s*\(\s*(.+)\s*\)$/
-                );
-                let processedFieldVal = String(fieldVal).trim();
-                if (processedFieldVal.match(/^\d+\.\d+$/)) {
-                  processedFieldVal = processedFieldVal
-                    .replace(/0+$/, '')
-                    .replace(/^(\d+)\.$/, '$1');
-                }
-                fields.push({
-                  label: headerUnit ? headerUnit[1].trim() : headerNormalised,
-                  value: headerUnit
-                    ? `${processedFieldVal}${headerUnit[2]}`
-                    : processedFieldVal,
+              }
+              break;
+            case 'quantity':
+              quantity = Number(fieldVal);
+              break;
+            case 'unit':
+              if (fields.length) {
+                fields[fields.length - 1].value = `${
+                  fields[fields.length - 1].value
+                }${fieldVal}`;
+              }
+              break;
+            default:
+              const headerUnit = headerTitle.match(/(.+)\s*\(\s*(.+)\s*\)$/);
+              let processedFieldVal = String(
+                fieldVal === undefined ? '' : fieldVal
+              ).trim();
+              if (processedFieldVal.match(/^\d+\.\d+$/)) {
+                processedFieldVal = processedFieldVal
+                  .replace(/0+$/, '')
+                  .replace(/^(\d+)\.$/, '$1');
+              }
+              const headerLabel = headerUnit
+                ? headerUnit[1].trim()
+                : headerTitle;
+              fields.push({
+                label: headerLabel,
+                value: headerUnit
+                  ? `${processedFieldVal}${headerUnit[2]}`
+                  : processedFieldVal,
+              });
+              if (!filledHeaders.find((header) => header.index === i)) {
+                filledHeaders.push({
+                  index: i,
+                  title: headerLabel,
                 });
-            }
+              }
           }
+          // }
         }
       }
-      components.push({
+      groups[groups.length - 1].components.push({
         id,
         slug,
         quantity,
@@ -112,7 +137,9 @@ async function processSheet(sheet) {
   componentCats.push({
     title: sheet.title,
     slug: slugify(sheet.title),
-    components,
+    groups,
+    headers: filledHeaders,
+    colCount: filledHeaders.length + 2,
   });
 }
 

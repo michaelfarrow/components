@@ -3,8 +3,47 @@
   <li><a href="/">Home</a></li>
   <li>{{category.title}}</li>
 </ul>
-<ul class="components">
+
+<div class="components-table">
+  <table>
+    <thead>
+      <tr>
+        <td>Component</td>
+        <td>Quantity</td>
+        {{#each category.headers}}
+        <td>{{title}}</td>
+        {{/each}}
+        <td>Datasheet</td>
+      </tr>
+    </thead>
+    {{#each category.groups}}
+    {{#if components.length}}
+    <tbody>
+      {{#if name}}<tr>
+        <td colspan="{{colCount}}">{{name}}</td>
+      </tr>{{/if}}
+      {{#each components}}
+      <tr>
+        <td>{{#if id}}<a href="/c/{{../category.slug}}/{{slug}}/">{{id}}</a>{{/if}}</td>
+        <td>{{quantity}}</td>
+        {{#each fields}}
+        <td>{{#if this.value}}{{this.value}}{{/if}}</td>
+        {{!-- <td>{{#unless ../id}}{{#unless @index}}<a
+                href="/c/{{../../category.slug}}/{{../slug}}/">{{/unless}}{{/unless}}{{#if this.value}}{{this.value}}{{/if}}{{#unless ../id}}{{#unless @index}}</a>{{/unless}}{{/unless}}
+            </td> --}}
+        {{/each}}
+        <td>{{#if datasheet}}<a class="datasheet__tick" target="_blank" href="{{datasheet}}"
+            title="Datasheet">✓</a>{{/if}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+    {{/if}}
+    {{/each}}
+  </table>
+</div>
+
+{{!-- <ul class="components">
   {{#each category.components}}
   <li><a href="/c/{{../category.slug}}/{{slug}}/">{{id}}</a></li>
   {{/each}}
-</ul>
+</ul> --}}
