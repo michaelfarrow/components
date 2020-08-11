@@ -139,7 +139,7 @@ async function processSheet(sheet) {
     slug: slugify(sheet.title),
     groups,
     headers: filledHeaders,
-    colCount: filledHeaders.length + 2,
+    colCount: filledHeaders.length + 3, // + Components, Quantity, Datasheet
   });
 }
 

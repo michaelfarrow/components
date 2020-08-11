@@ -20,11 +20,11 @@
     {{#if components.length}}
     <tbody>
       {{#if name}}<tr>
-        <td colspan="{{colCount}}">{{name}}</td>
+        <td class="components__group" colspan="{{../category.colCount}}">{{name}}</td>
       </tr>{{/if}}
       {{#each components}}
       <tr>
-        <td>{{#if id}}<a href="/c/{{../category.slug}}/{{slug}}/">{{id}}</a>{{/if}}</td>
+        <td>{{#if id}}<a href="/c/{{../../category.slug}}/{{slug}}/">{{id}}</a>{{/if}}</td>
         <td>{{quantity}}</td>
         {{#each fields}}
         <td>{{#if this.value}}{{this.value}}{{/if}}</td>

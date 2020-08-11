@@ -50,8 +50,8 @@ ul.breadcrumbs li:first-child::before {
 
 .components-table table {
   border-spacing: 0;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
   /* min-width: 100%; */
 }
 
@@ -60,16 +60,22 @@ ul.breadcrumbs li:first-child::before {
   white-space: nowrap;
 }
 
-.components-table table td:first-child {
+/* .components-table table td:first-child {
   padding-left: 0;
-}
+} */
 
 .components-table table thead tr td {
   font-weight: 700;
 }
 
-.components-table table tbody tr:nth-child(2n - 1) td {
+.components-table table tbody tr:nth-child(2n) td {
   background-color: #efefef;
+}
+
+.components-table table td.components__group {
+  font-weight: 700;
+  border-bottom: 2px solid #666;
+  padding-top: 1em;
 }
 
 .component__quantity {

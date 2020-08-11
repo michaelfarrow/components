@@ -35,11 +35,15 @@ app.get('/c/:category/:component', (req, res) => {
     (category) => category.slug === req.params.category
   );
   if (!category) return notFound(res);
-  const component = category.components.find(
-    (component) => component.slug === req.params.component
-  );
+  let component = null;
+  const group = category.groups.find((group) => {
+    component = group.components.find(
+      (component) => component.slug === req.params.component
+    );
+    if (component) return true;
+  });
   if (!component) return notFound(res);
-  res.render('component', { category, component });
+  res.render('component', { category, group, component });
 });
 
 app.get('/:slug', (req, res) => {
